@@ -23,4 +23,7 @@ public class Nota {
     @Column(name = "descripcion", length = 500, nullable = false)
     private String descripcion;
 
+    @Column(name = "usuario")
+    private String usuario;
+
 }
