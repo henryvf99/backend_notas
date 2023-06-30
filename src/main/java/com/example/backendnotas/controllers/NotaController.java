@@ -29,21 +29,9 @@ public class NotaController {
     }*/
 
     @PostMapping
-    public ResponseEntity<WrapperResponse<Nota>> agregarNota(@RequestBody Nota nota, @RequestHeader("Authorization") String authorizationHeader){
-
-        String token = authorizationHeader.substring(7);
-
-        Claims claims = Jwts.parser()
-                .setSigningKey("614E645267556B58703273357638782F413F4428472B4B6250655368566D597133743677397A244226452948404D635166546A576E5A7234753778214125442A")
-                .parseClaimsJws(token)
-                .getBody();
-
-        String userId = claims.getSubject();
-
-        nota.setUsuario(userId);
-        Nota notaNew = notaService.agregarNota(nota);
-
-        return new WrapperResponse<Nota>(true, "success", notaNew)
+    public ResponseEntity<WrapperResponse<Nota>> agregarNota(@RequestBody Nota nota){
+        Nota newNota = notaService.agregarNota(nota);
+        return new WrapperResponse<Nota>(true, "success", newNota)
                 .createResponse(HttpStatus.OK);
     }
 
@@ -55,8 +43,13 @@ public class NotaController {
     }
 
     @GetMapping
-    public ResponseEntity<WrapperResponse<List<Nota>>> ListarNotas(){
+    public ResponseEntity<WrapperResponse<List<Nota>>> listarNotas(){
         List<Nota> notas = notaService.listarNotas();
+        return new WrapperResponse<>(true, "success", notas).createResponse(HttpStatus.OK);
+    }
+    @GetMapping("/listar/{id}")
+    public ResponseEntity<WrapperResponse<List<Nota>>> listarNotasPorUsuario(@PathVariable("id") Integer iduser){
+        List<Nota> notas = notaService.listarNotasPorUsuario(iduser);
         return new WrapperResponse<>(true, "success", notas).createResponse(HttpStatus.OK);
     }
 

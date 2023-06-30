@@ -1,4 +1,4 @@
-package com.petsos.api.config;
+package com.example.backendnotas.config;
 
 import java.io.IOException;
 

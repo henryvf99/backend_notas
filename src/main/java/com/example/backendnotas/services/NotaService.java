@@ -51,6 +51,11 @@ public class NotaService {
     }
 
     @Transactional
+    public List<Nota> listarNotasPorUsuario(Integer idusuario){
+        return notaRepositorio.findByIdusuario(idusuario);
+    }
+
+    @Transactional
     public void eliminarNota(Long idNota){
         Nota nota = this.obtenerNotaPorId(idNota);
         notaRepositorio.delete(nota);
